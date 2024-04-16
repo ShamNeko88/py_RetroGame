@@ -1,10 +1,12 @@
 import tkinter as tk
 from tkinter import ttk
+from PIL import Image, ImageTk
 
 LOGIN_USER = "test_user1"
 ROCK = "./data/グー.png"
 SCISSORS = "./data/チョキ.png"
 PAPER = "./data/パー.png"
+ROTATED_ROCK = Image.open("./data/グー.png").rotate(180) # 180度回転
 
 class Application(tk.Frame):
     def __init__(self, master=None):
@@ -41,6 +43,9 @@ class Application(tk.Frame):
         self.game_zone = tk.Frame(self.master)
         self.game_zone.config(width=800, height= 450, background="")
         self.game_zone.grid(row=1, column=0)
+        # 敵の手（グー）#TODO 回転させて、1/3に縮小　おそらくPILLOW使う
+        self.rock_img = ImageTk.PhotoImage(ROTATED_ROCK)
+        
         # 自分の手（グー）
         self.rock_img = tk.PhotoImage(file=ROCK)
         self.rock_img = self.rock_img.subsample(3, 3)
