@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
-
+# 手のアイコン
 LOGIN_USER = "test_user1"
 ROCK = "./data/グー.png"
 SCISSORS = "./data/チョキ.png"
