@@ -145,6 +145,11 @@ class Application(tk.Frame):
     def retry(self):
         print("リトライ")
 
+"""
+別ウィンドウ
+"""
+class SubWindow():
+    pass
 if __name__ == "__main__":
     root = tk.Tk()
     App = Application(root)
