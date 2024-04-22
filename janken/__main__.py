@@ -117,12 +117,13 @@ class Application(tk.Frame):
         self.point.place(x=10, y=200)
     
     # ********* ヘッダーゾーン ************
+    # ユーザー管理画面
     def user_manager(self):
-        print("ユーザーの管理")
+        user_manager = SubWindow(self, "user_manager")
 
     # ログイン処理
     def login(self):
-        print("ログイン")
+        login = SubWindow(self, "login")
     
     # ********* 成績ゾーン *************
     # 成績更新処理
@@ -149,7 +150,33 @@ class Application(tk.Frame):
 別ウィンドウ
 """
 class SubWindow():
-    pass
+    def __init__(self, master, mode):
+        # パラメーターの受け取り
+        self.master = master
+        self.mode = mode
+
+        # サブウィンドウの描画
+        self.sub_window = tk.Toplevel()
+        self.sub_window.title("")
+        self.sub_window.geometry("200x200")
+        self.sub_window.grab_set()
+        
+        # ウィジェットの描画
+        if mode == "login":
+            self.set_login()
+        elif mode == "user_manager":
+            self.set_user_manager()
+        
+    # ログインウィジェット配置
+    def set_login(self):
+        self.test1 = ttk.Label(self.sub_window, text="ログイン画面")
+        self.test1.pack()
+    
+    # ユーザー管理ウィジェット配置
+    def set_user_manager(self):
+        self.test2 = ttk.Label(self.sub_window, text="ユーザー管理画面")
+        self.test2.pack()
+
 if __name__ == "__main__":
     root = tk.Tk()
     App = Application(root)
