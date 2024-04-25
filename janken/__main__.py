@@ -154,28 +154,52 @@ class SubWindow():
         # パラメーターの受け取り
         self.master = master
         self.mode = mode
-
-        # サブウィンドウの描画
-        self.sub_window = tk.Toplevel()
-        self.sub_window.title("")
-        self.sub_window.geometry("200x200")
-        self.sub_window.grab_set()
         
-        # ウィジェットの描画
+        # サブウィンドウとウィジェットの描画
         if mode == "login":
+            self.sub_window = tk.Toplevel()
+            self.sub_window.title("ログイン画面")
+            self.sub_window.geometry("300x200")
+            self.sub_window.grab_set()
             self.set_login()
         elif mode == "user_manager":
+            self.sub_window = tk.Toplevel()
+            self.sub_window.title("ユーザー管理画面")
+            self.sub_window.geometry("500x300")
+            self.sub_window.grab_set()
             self.set_user_manager()
         
     # ログインウィジェット配置
     def set_login(self):
-        self.test1 = ttk.Label(self.sub_window, text="ログイン画面")
-        self.test1.pack()
+        # ログインユーザー名入力
+        self.user_label = ttk.Label(self.sub_window, text="ユーザー名")
+        self.user_label.place(x=60, y=40)
+        self.stvar_user_entry = tk.StringVar()
+        self.user_entry = ttk.Entry(self.sub_window, textvariable=self.stvar_user_entry)
+        self.user_entry.place(x=120, y=40)
+
+        # パスワード入力
+        self.pass_label = ttk.Label(self.sub_window, text="パスワード")
+        self.pass_label.place(x=60, y=90)
+        self.stvar_pass_entry = tk.StringVar()
+        self.pass_entry = ttk.Entry(self.sub_window, textvariable=self.stvar_pass_entry, show="*")
+        self.pass_entry.place(x=120, y=90)
+        
+        # ログイン
+        self.login = ttk.Button(self.sub_window, text="ログイン", command=self.login_process)
+        self.login.place(x=140, y= 150)
     
     # ユーザー管理ウィジェット配置
     def set_user_manager(self):
         self.test2 = ttk.Label(self.sub_window, text="ユーザー管理画面")
         self.test2.pack()
+    
+    # ログイン実行
+    def login_process(self):
+        self.user_name = self.stvar_user_entry.get()
+        self.password = self.stvar_pass_entry.get()
+        print("ユーザー名：" + self.user_name)
+        print("パスワード:" + self.password)
 
 if __name__ == "__main__":
     root = tk.Tk()
