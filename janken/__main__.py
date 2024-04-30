@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 # 手のアイコン
-LOGIN_USER = "test_user1"
+LOGIN_USER = "test_user"
 ROCK = "./data/グー.png"
 SCISSORS = "./data/チョキ.png"
 PAPER = "./data/パー.png"
@@ -37,8 +37,8 @@ class Application(tk.Frame):
         self.login_btn.place(x=500, y=10)
         
         # ログインユーザー名
-        self.login_user_name = ttk.Label(self.header_zone, text=f"ユーザー名：  {LOGIN_USER}", font=12, relief=tk.FLAT, background="LightSkyBlue1")
-        self.login_user_name.place(x=600, y=10, width=180, height=30)
+        self.login_user_name = ttk.Label(self.header_zone, text=f"ユーザー：  {LOGIN_USER}", font=12, relief=tk.FLAT, background="LightSkyBlue1")
+        self.login_user_name.place(x=590, y=10, width=200, height=30)
 
         # ******** ゲームゾーン *************
         # ゲームゾーン作成
