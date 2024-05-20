@@ -160,12 +160,14 @@ class SubWindow():
             self.sub_window = tk.Toplevel()
             self.sub_window.title("ログイン画面")
             self.sub_window.geometry("300x200")
+            self.sub_window.resizable(False, False)
             self.sub_window.grab_set()
             self.set_login()
         elif mode == "user_manager":
             self.sub_window = tk.Toplevel()
             self.sub_window.title("ユーザー管理画面")
-            self.sub_window.geometry("500x300")
+            self.sub_window.geometry("480x250")
+            self.sub_window.resizable(False, False)
             self.sub_window.grab_set()
             self.set_user_manager()
         
@@ -191,9 +193,39 @@ class SubWindow():
     
     # ユーザー管理ウィジェット配置
     def set_user_manager(self):
-        self.test2 = ttk.Label(self.sub_window, text="ユーザー管理画面")
-        self.test2.pack()
-    
+        # ***** 表領域 *****
+        # 表の設置
+        user_table_columns = ("ID", "ユーザー名", "管理権限", "備考")
+        self.table = ttk.Treeview(self.sub_window, columns=user_table_columns, selectmode="browse", show="headings", height=10)
+        self.table.grid(row=0, column=0, sticky=tk.N+tk.S+tk.E+tk.W, padx=5)
+        # 列の設定
+        self.table.column("ID", anchor="center", width=50, stretch=False)
+        self.table.column("ユーザー名", anchor="center", width=100, stretch=False)
+        self.table.column("管理権限", anchor="center", width=70, stretch=False)
+        self.table.column("備考", anchor="center", width=200, stretch=False)
+        # ヘッダー設定
+        self.table.heading("ID", text="ID", anchor="center")
+        self.table.heading("ユーザー名", text="ユーザー名", anchor="center")
+        self.table.heading("管理権限", text="管理権限", anchor="center")
+        self.table.heading("備考", text="備考", anchor="center")
+
+        # 縦スクロールバー
+        vscrollbar = ttk.Scrollbar(self.sub_window, orient=tk.VERTICAL)
+        vscrollbar.config(command=self.table.yview)
+        vscrollbar.grid(row=0, column=1, sticky=tk.NS)
+        self.table.config(yscrollcommand=vscrollbar.set)
+
+        # 横スクロールバー
+        hscrollbar = ttk.Scrollbar(self.sub_window, orient=tk.HORIZONTAL)
+        hscrollbar.config(command=self.table.xview)
+        hscrollbar.grid(row=1, column=0, sticky=tk.EW)
+        self.table.config(xscrollcommand=hscrollbar.set)
+
+        # TODO ダミーデータ
+        self.table.insert(parent="", index="end", iid=0, values=(
+            "1", "test_user", "0", "ダミーデータです。これはテストの為のデータになります。"
+        ))
+
     # ログイン実行
     def login_process(self):
         self.user_name = self.stvar_user_entry.get()
