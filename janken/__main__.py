@@ -166,7 +166,7 @@ class SubWindow():
         elif mode == "user_manager":
             self.sub_window = tk.Toplevel()
             self.sub_window.title("ユーザー管理画面")
-            self.sub_window.geometry("480x250")
+            self.sub_window.geometry("450x280")
             self.sub_window.resizable(False, False)
             self.sub_window.grab_set()
             self.set_user_manager()
@@ -193,37 +193,48 @@ class SubWindow():
     
     # ユーザー管理ウィジェット配置
     def set_user_manager(self):
+        # ヘッダーフレーム設置
+        self.user_manage_header = tk.Frame(self.sub_window)
+        self.user_manage_header.grid(row=0, column=0)
+        # ユーザー新規作成ボタン
+        self.user_create_btn = ttk.Button(self.user_manage_header, text="ユーザー作成", command=lambda:self.user_manage_process("create"))
+        self.user_create_btn.grid(row=0, column=0, padx=20)
+        self.user_upd_btn = ttk.Button(self.user_manage_header, text="ユーザー更新", command=lambda:self.user_manage_process("update"))
+        self.user_upd_btn.grid(row=0, column=1, padx=20)
+        self.user_delete_btn = ttk.Button(self.user_manage_header, text="ユーザー削除", command=lambda:self.user_manage_process("delete"))
+        self.user_delete_btn.grid(row=0, column=2, padx=20)
+
         # ***** 表領域 *****
         # 表の設置
-        user_table_columns = ("ID", "ユーザー名", "管理権限", "備考")
+        user_table_columns = ("ID", "ユーザー名", "管理FLG", "備考")
         self.table = ttk.Treeview(self.sub_window, columns=user_table_columns, selectmode="browse", show="headings", height=10)
-        self.table.grid(row=0, column=0, sticky=tk.N+tk.S+tk.E+tk.W, padx=5)
+        self.table.grid(row=1, column=0, sticky=tk.N+tk.S+tk.E+tk.W, padx=5)
         # 列の設定
         self.table.column("ID", anchor="center", width=50, stretch=False)
         self.table.column("ユーザー名", anchor="center", width=100, stretch=False)
-        self.table.column("管理権限", anchor="center", width=70, stretch=False)
+        self.table.column("管理FLG", anchor="center", width=70, stretch=False)
         self.table.column("備考", anchor="center", width=200, stretch=False)
         # ヘッダー設定
         self.table.heading("ID", text="ID", anchor="center")
         self.table.heading("ユーザー名", text="ユーザー名", anchor="center")
-        self.table.heading("管理権限", text="管理権限", anchor="center")
+        self.table.heading("管理FLG", text="管理FLG", anchor="center")
         self.table.heading("備考", text="備考", anchor="center")
 
         # 縦スクロールバー
         vscrollbar = ttk.Scrollbar(self.sub_window, orient=tk.VERTICAL)
         vscrollbar.config(command=self.table.yview)
-        vscrollbar.grid(row=0, column=1, sticky=tk.NS)
+        vscrollbar.grid(row=1, column=1, sticky=tk.NS)
         self.table.config(yscrollcommand=vscrollbar.set)
 
         # 横スクロールバー
         hscrollbar = ttk.Scrollbar(self.sub_window, orient=tk.HORIZONTAL)
         hscrollbar.config(command=self.table.xview)
-        hscrollbar.grid(row=1, column=0, sticky=tk.EW)
+        hscrollbar.grid(row=2, column=0, sticky=tk.EW)
         self.table.config(xscrollcommand=hscrollbar.set)
 
         # TODO ダミーデータ
         self.table.insert(parent="", index="end", iid=0, values=(
-            "1", "test_user", "0", "ダミーデータです。これはテストの為のデータになります。"
+            "1", "test_user", "0", "ダミーデータです。"
         ))
 
     # ログイン実行
@@ -232,7 +243,16 @@ class SubWindow():
         self.password = self.stvar_pass_entry.get()
         print("ユーザー名：" + self.user_name)
         print("パスワード:" + self.password)
-
+    
+    # ユーザー管理処理
+    def user_manage_process(self, process_type):
+        if process_type == "create":
+            print("create")
+        elif process_type == "update":
+            print("update")
+        elif process_type == "delete":
+            print("delete")
+            
 if __name__ == "__main__":
     root = tk.Tk()
     App = Application(root)
