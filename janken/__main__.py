@@ -104,7 +104,8 @@ class Application(tk.Frame):
         # ******* 成績ゾーン **********
         # 成績ゾーン作成
         self.score_zone = tk.Frame(self.master)
-        self.score_zone.config(width=200, height=450, background="light yellow")
+        self.score_zone.config(width=200, height=450,
+                               background="light yellow")
         self.score_zone.grid(row=1, column=1)
         # Excel出力ボタン
         self.export_excel_btn = ttk.Button(self.score_zone, text="EXCEL",
