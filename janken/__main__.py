@@ -13,6 +13,8 @@ ROTATED_PAPER = Image.open("./data/パー.png").rotate(180)
 
 
 class Application(tk.Frame):
+    """GUIアプリメインのクラス
+    """
     def __init__(self, master=None):
         super().__init__(master)
         # ウィンドウの設定
